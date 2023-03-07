@@ -1,25 +1,22 @@
-var http = require("http");
-var fs = require("fs");
 
-var server = http.createServer((req, res) => {
-  console.log(req.url);
+var express = require("express")
 
-  if (req.url == "/") {
-    fs.readFile("index.html", (err, html) => {
-      res.write(html);
-      res.end;
-    });
-  } else if (req.url == "/products") {
-    fs.readFile("products.html", (err, html) => {
-      res.write(html);
-      res.end;
-    });
-  } else {
-    res.write("<h1>404 Not Found</h1>");
-    res.end;
-  }
-});
+const app = express()
 
-server.listen(3000, () => {
+app.set("view engine", "ejs")
+
+app.use("/products/:id", function (req,res) {
+  res.render("product-details")
+})
+
+app.use("/products", function (req,res) {
+  res.render("products")
+})
+
+app.use("/", function (req,res) {
+  res.render("home")
+})
+
+app.listen(3000, () => {
   console.log("node.js server at port 3000");
-});
+})
