@@ -27,11 +27,10 @@ router.use("/products/:id", async function (req, res) {
   router.use("/", async function (req, res) {
     try {
       const [products, ] = await db.execute("SELECT * FROM products WHERE isHome=1 AND isActive=1")
-      console.log(products)
       res.render("home", {products});
     } catch (err) {
       console.log(err);
     }
   });
 
-  module.exports = router
+module.exports = router
